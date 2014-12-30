@@ -16,18 +16,16 @@
 
 package kamon.util.annotation
 
-import akka.actor.{Props, Actor, ActorSystem}
-import com.typesafe.config.ConfigFactory
+import akka.actor.ActorSystem
 import kamon.Kamon
-import kamon.annotation.{Gauge, Counter, Trace}
+import kamon.annotation.{Counter, Gauge, Trace}
 import kamon.instrumentation.annotation.AnnotationBla
-import kamon.metric.Subscriptions.TickMetricSnapshot
 import kamon.metric.TraceMetrics.TraceMetricsSnapshot
-import kamon.metric.UserMetrics.{UserGauge, Count, UserCounter}
-import kamon.metric.{TraceMetrics, Metrics}
-import org.scalatest.{ Matchers, WordSpecLike }
+import kamon.metric.UserMetrics.{UserCounter, UserGauge}
+import kamon.metric.{Metrics, TraceMetrics}
+import org.scalatest.{Matchers, WordSpecLike}
 
-class AnnotationFilterSpec extends WordSpecLike with Matchers {
+class AnnotationSpec extends WordSpecLike with Matchers {
 
   implicit lazy val system: ActorSystem = AnnotationBla.system
 
@@ -65,14 +63,6 @@ class AnnotationFilterSpec extends WordSpecLike with Matchers {
     val recorder = Kamon(Metrics).register(TraceMetrics(traceName), TraceMetrics.Factory)
     val collectionContext = Kamon(Metrics).buildDefaultCollectionContext
     recorder.get.collect(collectionContext)
-  }
-}
-
-class PrintWhatever extends Actor {
-  def receive = {
-    case TickMetricSnapshot(from, to, metrics) ⇒
-      println(metrics.map { case (key, value) ⇒ key.name + " => " + value.metrics.mkString(",") }.seq.mkString("|"))
-    case anything ⇒ println(anything)
   }
 }
 

@@ -38,7 +38,6 @@ object AnnotationBla {
   val system: ActorSystem = ActorSystem("annotations-spec", ConfigFactory.parseString(
     """
       |kamon.metrics {
-      |  tick-interval = 1 second
       |  default-collection-context-buffer-size = 100
       |}
     """.stripMargin))
