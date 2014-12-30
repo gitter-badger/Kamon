@@ -24,6 +24,9 @@
 
     <!-- Patterns -->
     <aspect name="akka.kamon.instrumentation.AskPatternInstrumentation"/>
+
+      <!-- Patterns -->
+    <aspect name="kamon.instrumentation.annotation.AnnotationInstrumentation"/>
   </aspects>
 
   <weaver>
